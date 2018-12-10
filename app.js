@@ -1,6 +1,14 @@
 const express = require('express');
 const app = express();
+app.locals.pretty = true;
+
+app.set('views', './views'); // 아무것도 선언하지 않으면 노드는 자동으로 이 디렉토리를 찾는다.
+app.set('view engine', 'jade')
 app.use(express.static('public'));
+
+app.get('/template', function({req, res}) {
+  res.render('temp', {time: Date(), title: 'Jade'});
+});
 
 app.get('/', function(req, res){
   res.send('Hello woosyumes home!');
