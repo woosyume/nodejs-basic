@@ -1,10 +1,34 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 app.locals.pretty = true;
 
 app.set('views', './views'); // 아무것도 선언하지 않으면 노드는 자동으로 이 디렉토리를 찾는다.
 app.set('view engine', 'jade')
 app.use(express.static('public'));
+
+// For using post method, create application/x-www-form-urlencoded parser
+//const urlencodedParser = bodyParser.urlencoded({ extended: false });
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.get('/form', function(req, res){
+  res.render('form');
+});
+
+app.get('/form_receiver', function(req, res){
+  // var title = req.query.title;
+  // var description = req.query.description;
+  // res.send(title + ', ' + description);
+  res.send('Hello, GET');
+});
+
+app.post('/form_receiver', function(req, res){
+  var title = req.body.title;
+  var description = req.body.description;
+  //res.send('Hello,  POST');
+  res.send(title + ', ' + description);
+});
+
 
 app.get('/topic/:id', function(req, res){ // Semantic URL
 //res.send(req.query.id + ', ' + req.query.name); // We can trasfer multiple values with query string.
