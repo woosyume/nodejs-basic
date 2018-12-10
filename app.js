@@ -6,6 +6,26 @@ app.set('views', './views'); // 아무것도 선언하지 않으면 노드는 �
 app.set('view engine', 'jade')
 app.use(express.static('public'));
 
+app.get('/topic', function(req, res){
+//res.send(req.query.id + ', ' + req.query.name); // We can trasfer multiple values with query string.
+
+  var topics = [
+    'Javascript is...',
+    'Nodejs is...',
+    'Express is...'
+  ];
+
+  var output = `
+  <a href="/topic?id=0">JavaScript</a><br>
+  <a href="/topic?id=1">Nodejs</a><br>
+  <a href="/topic?id=2">Express</a><br><br>
+  ${topics[req.query.id]}
+  `
+
+  //res.send(topics[req.query.id]);
+  res.send(output);
+});
+
 app.get('/template', function({req, res}) {
   res.render('temp', {time: Date(), title: 'Jade'});
 });
